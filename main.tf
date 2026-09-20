@@ -10,5 +10,12 @@ data "msgraph_resource_action" "resource_action_lookup" {
   query_parameters       = each.value.query_parameters
   response_export_values = each.value.response_export_values
   retry                  = each.value.retry
+
+  dynamic "timeouts" {
+    for_each = each.value.timeouts != null ? [each.value.timeouts] : []
+    content {
+      read = timeouts.value.read
+    }
+  }
 }
 
